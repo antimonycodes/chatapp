@@ -54,6 +54,30 @@ body {
   border-radius: 6px;
   border: 1px solid #0000000a;
 }
+.message-with-avatar {
+  display: flex;
+  max-width: 70%;
+  gap: 20px;
+  /* align-items: center; */
+}
+
+/* .message-with-avatar img {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+} */
+
+.message-without-avatar {
+  display: flex;
+  max-width: 70%;
+  align-self: flex-end;
+}
+.message-without-avatar p {
+  background-color: #5183fe;
+}
+span {
+  display: inline;
+}
 
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

@@ -6,7 +6,7 @@ function App() {
   return (
     <>
       <div
-        className=" w-[90vw] h-[90vh] rounded-lg  border border-solid border-gray-500  md:flex "
+        className=" w-[80vw] h-[90vh] rounded-lg  border border-solid border-gray-500  md:flex "
         style={{
           background:
             "linear-gradient(90deg, rgba(91,33,182,0.75) 47%, rgba(39,121,216,0.75) 100%)",

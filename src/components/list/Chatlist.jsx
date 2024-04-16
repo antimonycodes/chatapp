@@ -16,7 +16,7 @@ const Chatlist = () => {
   ];
   return (
     <div>
-      <div className=" flex items-center gap-5 px-3 py-5">
+      <div className=" flex items-center gap-5 px-3 py-3">
         <div
           className=" flex-1 flex items-center gap-5 rounded-xl py-[8px] px-[10px]"
           style={{ background: "rgba(17,25,40,0.5)" }}
@@ -26,7 +26,7 @@ const Chatlist = () => {
             <input
               type="text"
               placeholder="search"
-              className=" bg-transparent border-none outline-none text-white"
+              className=" bg-transparent border-none outline-none text-white grow"
             />
           </div>
         </div>
