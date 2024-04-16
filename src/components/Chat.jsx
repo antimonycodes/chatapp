@@ -67,7 +67,7 @@ const Chat = () => {
     <div className=" flex-2 h-full flex flex-col relative overflow-scroll">
       {/* details */}
       {detailsOpen && (
-        <div className=" absolute bg-red-950 h-full w-full z-50 xl:hidden">
+        <div className=" absolute bg-black h-full w-full z-50 xl:hidden">
           <div className=" px-3 py-3 flex items-center  gap-10 border border-b border-[#dddddd35]">
             <div
               className=" text-xl"
