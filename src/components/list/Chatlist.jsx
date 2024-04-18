@@ -1,8 +1,44 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddUser from "./AddUser";
+import { useUserStore } from "../../lib/Userstore";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { db } from "../../lib/Firebase";
 
 const Chatlist = () => {
   const [addMode, setAddMode] = useState(false);
+  const [chats, setChats] = useState([]);
+
+  const { currentUser } = useUserStore;
+
+  useEffect(() => {
+    if (currentUser) {
+      const unsub = onSnapshot(
+        doc(db, "userchats", currentUser.id),
+        async (res) => {
+          // console.log("Current data: ", doc.data());
+          // setChats(doc.data());
+          const items = res.data().chats;
+
+          const promises = items.map(async (item) => {
+            const userDocRef = doc(db, "users", item.receiverId);
+            const userDocSnap = await getDoc(userDocRef);
+
+            const user = userDocSnap.data();
+
+            return { ...item, user };
+          });
+          const chatData = await Promise.all(promises);
+
+          setChats(chatData.sort((a, b) => b.updatedAt - a.updatedAt));
+        }
+      );
+      return () => {
+        unsub();
+      };
+    }
+  }, [currentUser]);
+
+  console.log(chats);
 
   const chatItem = [
     { id: 1, img: "/avatar.png", name: " User Name", message: "hello " },
@@ -41,10 +77,10 @@ const Chatlist = () => {
         />
       </div>
       {/*Chat items */}
-      {chatItem.map((item, id) => {
+      {chats.map((chat) => {
         return (
           <div
-            key={id}
+            key={chat.id}
             className=" flex items-center gap-5 px-3 py-5 cursor-pointer border-b border-solid  border-[#dddddd35]"
           >
             <img
@@ -55,7 +91,7 @@ const Chatlist = () => {
             />
             <div className=" flex flex-col gap-2">
               <span className=" font-medium">{item.name}</span>
-              <p className=" text-sm font-light"> {item.message}</p>
+              <p className=" text-sm font-light"> {chat.lastMessage}</p>
             </div>
           </div>
         );

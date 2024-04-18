@@ -1,3 +1,5 @@
+import { auth } from "../lib/Firebase";
+
 const Details = () => {
   return (
     <div className=" flex-1">
@@ -137,7 +139,10 @@ const Details = () => {
         <button className=" px-5 py-1 bg-[rgba(230,74,105,0.533)] text-white border-none rounded cursor-pointer hover:bg-[rgba(220,20,60,0.796)]">
           Block User
         </button>
-        <button className=" px-5 py-1 bg-[#1a73e8] text-white border-none rounded cursor-pointer hover:bg-[rgba(220,20,60,0.796)]">
+        <button
+          className=" px-5 py-1 bg-[#1a73e8] text-white border-none rounded cursor-pointer hover:bg-[rgba(220,20,60,0.796)]"
+          onClick={() => auth.signOut()}
+        >
           Log Out
         </button>
       </div>
