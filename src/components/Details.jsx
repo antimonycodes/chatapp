@@ -2,7 +2,7 @@ import { auth } from "../lib/Firebase";
 
 const Details = () => {
   return (
-    <div className=" flex-1">
+    <div className="flex-1 ">
       {/* user */}
       <div className=" px-8 py-1 flex flex-col items-center  border-b border-solid border-[#dddddd35] ">
         <img
@@ -14,9 +14,9 @@ const Details = () => {
         <p>Lorem ipsum dolor sit amet.</p>
       </div>
       {/* info */}
-      <div className=" px-5 py-1 flex flex-col gap-2">
+      <div className="flex flex-col gap-2 px-5 py-1 ">
         <div>
-          <div className=" flex items-center justify-between">
+          <div className="flex items-center justify-between ">
             <span>Chat Settings</span>
             <img
               src="/arrowUp.png"
@@ -26,7 +26,7 @@ const Details = () => {
           </div>
         </div>
         <div>
-          <div className=" flex items-center justify-between">
+          <div className="flex items-center justify-between ">
             <span>Chat Settings</span>
             <img
               src="/arrowUp.png"
@@ -36,7 +36,7 @@ const Details = () => {
           </div>
         </div>
         <div>
-          <div className=" flex items-center justify-between">
+          <div className="flex items-center justify-between ">
             <span>Privacy & help</span>
             <img
               src="/arrowUp.png"
@@ -46,7 +46,7 @@ const Details = () => {
           </div>
         </div>{" "}
         <div>
-          <div className=" flex items-center justify-between">
+          <div className="flex items-center justify-between ">
             <span>Shared photos</span>
             <img
               src="/arrowDown.png"
@@ -55,15 +55,15 @@ const Details = () => {
             />
           </div>
           {/* photos */}
-          <div className=" flex flex-col gap-2 mt-4">
-            <div className=" flex items-center justify-between ">
-              <div className=" flex items-center gap-5">
+          <div className="flex flex-col gap-2 mt-4 ">
+            <div className="flex items-center justify-between ">
+              <div className="flex items-center gap-5 ">
                 <img
                   src="/bi.jpg"
                   alt=""
-                  className=" w-10 h-10 rounded-md object-cover"
+                  className="object-cover w-10 h-10 rounded-md "
                 />
-                <span className="text-sm text-gray-200 font-light ">
+                <span className="text-sm font-light text-gray-200 ">
                   photo_2024_2.png
                 </span>
               </div>
@@ -74,13 +74,13 @@ const Details = () => {
               />
             </div>
             <div className="flex items-center justify-between ">
-              <div className=" flex items-center gap-5">
+              <div className="flex items-center gap-5 ">
                 <img
                   src="/bi.jpg"
                   alt=""
-                  className=" w-10 h-10 rounded-md object-cover"
+                  className="object-cover w-10 h-10 rounded-md "
                 />
-                <span className="text-sm text-gray-200 font-light ">
+                <span className="text-sm font-light text-gray-200 ">
                   photo_2024_2.png
                 </span>
               </div>
@@ -91,13 +91,13 @@ const Details = () => {
               />
             </div>{" "}
             <div className="flex items-center justify-between ">
-              <div className=" flex items-center gap-5">
+              <div className="flex items-center gap-5 ">
                 <img
                   src="/bi.jpg"
                   alt=""
-                  className=" w-10 h-10 rounded-md object-cover"
+                  className="object-cover w-10 h-10 rounded-md "
                 />
-                <span className="text-sm text-gray-200 font-light ">
+                <span className="text-sm font-light text-gray-200 ">
                   photo_2024_2.png
                 </span>
               </div>
@@ -107,14 +107,14 @@ const Details = () => {
                 className=" w-7 h-7 bg-[rgba(17,25,40,0.3)] px-2 py-2 rounded-full cursor-pointer"
               />
             </div>{" "}
-            {/* <div className=" flex items-center justify-between ">
-              <div className=" flex items-center gap-5">
+            {/* <div className="flex items-center justify-between ">
+              <div className="flex items-center gap-5 ">
                 <img
                   src="/bi.jpg"
                   alt=""
-                  className=" w-10 h-10 rounded-md object-cover"
+                  className="object-cover w-10 h-10 rounded-md "
                 />
-                <span className="text-sm text-gray-200 font-light ">
+                <span className="text-sm font-light text-gray-200 ">
                   photo_2024_2.png
                 </span>
               </div>
@@ -127,7 +127,7 @@ const Details = () => {
           </div>
         </div>
         <div>
-          <div className=" flex items-center justify-between">
+          <div className="flex items-center justify-between ">
             <span>Sharedfiles</span>
             <img
               src="/arrowUp.png"

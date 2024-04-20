@@ -7,7 +7,7 @@ import List from "./components/list/List";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./lib/Firebase";
 import { useUserStore } from "./lib/Userstore";
-import ClipLoader from "react-spinners/ClipLoader";
+// import ClipLoader from "react-spinners/ClipLoader";
 import { useState } from "react";
 import { BounceLoader } from "react-spinners";
 

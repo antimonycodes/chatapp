@@ -1,10 +1,15 @@
 import EmojiPicker from "emoji-picker-react";
+import { doc, onSnapshot } from "firebase/firestore";
 import { useEffect, useRef, useState } from "react";
+import { db } from "../lib/Firebase";
+import { useChatStore } from "../lib/ChatStore";
 
 const Chat = () => {
   const [openEmoji, setOpenEmoji] = useState(false);
+  const [chat, setChat] = useState([]);
   const [text, setText] = useState("");
   const [detailsOpen, setDetailsOpen] = useState(false);
+  const { chatId } = useChatStore();
   const openDetails = () => {
     setDetailsOpen((prev) => !prev);
     console.log("details open");
@@ -13,6 +18,15 @@ const Chat = () => {
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
   }, []);
+  //
+  useEffect(() => {
+    const unSub = onSnapshot(doc(db, "chats", chatId), (res) => {
+      setChat(res.data());
+    });
+    return () => {
+      unSub();
+    };
+  }, [chatId]);
   const handleEmoji = (e) => {
     // console.log(e);
     setText((prev) => prev + e.emoji);
@@ -64,20 +78,20 @@ const Chat = () => {
     },
   ];
   return (
-    <div className=" flex-2 h-full flex flex-col relative overflow-scroll">
+    <div className="relative flex flex-col h-full overflow-scroll flex-2">
       {/* details */}
       {detailsOpen && (
-        <div className=" absolute bg-black h-full w-full z-50 xl:hidden">
+        <div className="absolute z-50 w-full h-full bg-black xl:hidden">
           <div className=" px-3 py-3 flex items-center  gap-10 border border-b border-[#dddddd35]">
             <div
-              className=" text-xl"
+              className="text-xl "
               onClick={() => setDetailsOpen((prev) => !prev)}
             >
               X
             </div>
             <div>Contact Info</div>
           </div>
-          <div className=" flex-1">
+          <div className="flex-1 ">
             {/* user */}
             <div className=" px-8 py-1 flex flex-col items-center  border-b border-solid border-[#dddddd35] ">
               <img
@@ -89,9 +103,9 @@ const Chat = () => {
               <p>Lorem ipsum dolor sit amet.</p>
             </div>
             {/* info */}
-            <div className=" px-5 py-1 flex flex-col gap-2">
+            <div className="flex flex-col gap-2 px-5 py-1 ">
               <div>
-                <div className=" flex items-center justify-between">
+                <div className="flex items-center justify-between ">
                   <span>Chat Settings</span>
                   <img
                     src="/arrowUp.png"
@@ -101,7 +115,7 @@ const Chat = () => {
                 </div>
               </div>
               <div>
-                <div className=" flex items-center justify-between">
+                <div className="flex items-center justify-between ">
                   <span>Chat Settings</span>
                   <img
                     src="/arrowUp.png"
@@ -111,7 +125,7 @@ const Chat = () => {
                 </div>
               </div>
               <div>
-                <div className=" flex items-center justify-between">
+                <div className="flex items-center justify-between ">
                   <span>Privacy & help</span>
                   <img
                     src="/arrowUp.png"
@@ -121,7 +135,7 @@ const Chat = () => {
                 </div>
               </div>{" "}
               <div>
-                <div className=" flex items-center justify-between">
+                <div className="flex items-center justify-between ">
                   <span>Shared photos</span>
                   <img
                     src="/arrowDown.png"
@@ -130,15 +144,15 @@ const Chat = () => {
                   />
                 </div>
                 {/* photos */}
-                <div className=" flex flex-col gap-2 mt-4">
-                  <div className=" flex items-center justify-between ">
-                    <div className=" flex items-center gap-5">
+                <div className="flex flex-col gap-2 mt-4 ">
+                  <div className="flex items-center justify-between ">
+                    <div className="flex items-center gap-5 ">
                       <img
                         src="/bi.jpg"
                         alt=""
-                        className=" w-10 h-10 rounded-md object-cover"
+                        className="object-cover w-10 h-10 rounded-md "
                       />
-                      <span className="text-sm text-gray-200 font-light ">
+                      <span className="text-sm font-light text-gray-200 ">
                         photo_2024_2.png
                       </span>
                     </div>
@@ -149,13 +163,13 @@ const Chat = () => {
                     />
                   </div>
                   <div className="flex items-center justify-between ">
-                    <div className=" flex items-center gap-5">
+                    <div className="flex items-center gap-5 ">
                       <img
                         src="/bi.jpg"
                         alt=""
-                        className=" w-10 h-10 rounded-md object-cover"
+                        className="object-cover w-10 h-10 rounded-md "
                       />
-                      <span className="text-sm text-gray-200 font-light ">
+                      <span className="text-sm font-light text-gray-200 ">
                         photo_2024_2.png
                       </span>
                     </div>
@@ -166,13 +180,13 @@ const Chat = () => {
                     />
                   </div>{" "}
                   <div className="flex items-center justify-between ">
-                    <div className=" flex items-center gap-5">
+                    <div className="flex items-center gap-5 ">
                       <img
                         src="/bi.jpg"
                         alt=""
-                        className=" w-10 h-10 rounded-md object-cover"
+                        className="object-cover w-10 h-10 rounded-md "
                       />
-                      <span className="text-sm text-gray-200 font-light ">
+                      <span className="text-sm font-light text-gray-200 ">
                         photo_2024_2.png
                       </span>
                     </div>
@@ -182,14 +196,14 @@ const Chat = () => {
                       className=" w-7 h-7 bg-[rgba(17,25,40,0.3)] px-2 py-2 rounded-full cursor-pointer"
                     />
                   </div>{" "}
-                  {/* <div className=" flex items-center justify-between ">
-              <div className=" flex items-center gap-5">
+                  {/* <div className="flex items-center justify-between ">
+              <div className="flex items-center gap-5 ">
                 <img
                   src="/bi.jpg"
                   alt=""
-                  className=" w-10 h-10 rounded-md object-cover"
+                  className="object-cover w-10 h-10 rounded-md "
                 />
-                <span className="text-sm text-gray-200 font-light ">
+                <span className="text-sm font-light text-gray-200 ">
                   photo_2024_2.png
                 </span>
               </div>
@@ -202,7 +216,7 @@ const Chat = () => {
                 </div>
               </div>
               <div>
-                <div className=" flex items-center justify-between">
+                <div className="flex items-center justify-between ">
                   <span>Sharedfiles</span>
                   <img
                     src="/arrowUp.png"
@@ -224,33 +238,30 @@ const Chat = () => {
 
       {/* TOP SECTION */}
       <div className=" px-3 py-3 flex items-center justify-between border border-b border-[#dddddd35]">
-        <div className=" flex items-center gap-5 ">
+        <div className="flex items-center gap-5 ">
           <img
             src="/avatar.png"
             alt=""
             width={50}
             height={50}
-            className=" rounded-full object-cover "
+            className="object-cover rounded-full "
           />
-          <div
-            className=" flex flex-col  bg-emerald-500 "
-            onClick={openDetails}
-          >
-            <span className=" text-lg font-bold">User Name</span>
+          <div className="flex flex-col bg-emerald-500" onClick={openDetails}>
+            <span className="text-lg font-bold ">User Name</span>
             <p className=" text-sm font-light text-[#a5a5a5]">
               {" "}
               Lorem ipsum, dolor sit amet consectetur
             </p>
           </div>
         </div>
-        <div className=" flex items-center gap-5">
+        <div className="flex items-center gap-5 ">
           <img src="/phone.png" alt="" width={20} />
           <img src="/video.png" alt="" width={20} />
           <img src="/info.png" alt="" width={20} />
         </div>
       </div>
       {/* CENTER SECTION */}
-      <div className=" px-3 py-5 flex-1 overflow-scroll flex flex-col gap-5">
+      <div className="flex flex-col flex-1 gap-5 px-3 py-5 overflow-scroll ">
         {messages.map((message) => (
           <div
             key={message.id}
@@ -262,10 +273,10 @@ const Chat = () => {
               <img
                 src={message.avatar}
                 alt=""
-                className=" w-8 h-8  rounded-full object-cover"
+                className="object-cover w-8 h-8 rounded-full "
               />
             )}
-            <div className="flex gap-1 flex-col flex-1">
+            <div className="flex flex-col flex-1 gap-1">
               <img
                 src="/bi.jpg"
                 alt=""
@@ -274,7 +285,7 @@ const Chat = () => {
               <p className=" px-3 py-5 bg-[rgba(17,25,40,0.3)] rounded-xl">
                 {message.content}
               </p>
-              <span className=" text-sm">{message.timestamp}</span>
+              <span className="text-sm ">{message.timestamp}</span>
             </div>
           </div>
         ))}
@@ -325,7 +336,7 @@ const Chat = () => {
       </div>
       {/* BOTTOM  */}
       <div className=" px-3 py-5 flex items-center justify-between border border-solid border-t border-[#dddddd35] gap-5 mt-auto">
-        <div className=" flex gap-5 cursor-pointer">
+        <div className="flex gap-5 cursor-pointer ">
           <img src="/img.png" alt="" width={20} />
           <img src="/camera.png" alt="" width={20} />
           <img src="/mic.png" alt="" width={20} />
@@ -337,20 +348,20 @@ const Chat = () => {
           className=" flex-1  border-none outline-none text-white bg-[rgba(17,25,40,0.5)] px-5 py-3 rounded-md text-base"
           onChange={(e) => setText(e.target.value)}
         />
-        <div className=" cursor-pointer relative">
+        <div className="relative cursor-pointer ">
           <img
             src="/emoji.png"
             alt=""
             width={20}
             onClick={() => setOpenEmoji((prev) => !prev)}
           />
-          <div className=" absolute bottom-12 left-0">
+          <div className="absolute left-0 bottom-12">
             <EmojiPicker open={openEmoji} onEmojiClick={handleEmoji} />
           </div>
           {/* {openEmoji ? (
             ""
           ) : (
-            <div className=" absolute">
+            <div className="absolute ">
               <EmojiPicker />
             </div>
           )} */}

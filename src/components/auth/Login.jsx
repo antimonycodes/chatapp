@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { auth, db } from "../../lib/Firebase";
 import { doc, setDoc } from "firebase/firestore";
 import upload from "../../lib/Upload";
-import { BarLoader, BeatLoader, BounceLoader, DotLoader } from "react-spinners";
+import { BeatLoader } from "react-spinners";
 
 const Login = () => {
   const [avatar, setAvatar] = useState({
@@ -107,7 +107,7 @@ const Login = () => {
               className=" w-full px-5 disabled:cursor-not-allowed disabled:bg-[#1f8ff19c] py-2 border-none bg-[#1f8ef1] text-white rounded-md cursor-pointer "
             >
               {loading ? (
-                <div className="flex items-center justify-center sweet-loading">
+                <div className="flex items-center justify-center gap-1 sweet-loading">
                   <h1>Loading</h1>
 
                   <BeatLoader
@@ -176,7 +176,22 @@ const Login = () => {
               disabled={loading}
               className=" w-full px-5 py-2 border-none bg-[#1f8ef1] text-white rounded-md cursor-pointer "
             >
-              {loading ? "Loading" : "Sign Up"}
+              {loading ? (
+                <div className="flex items-center justify-center sweet-loading">
+                  <h1>Loading</h1>
+
+                  <BeatLoader
+                    color={color}
+                    loading={loading}
+                    cssOverride={override}
+                    size={10}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                </div>
+              ) : (
+                "Sign Up"
+              )}
             </button>
           </form>
         </div>
