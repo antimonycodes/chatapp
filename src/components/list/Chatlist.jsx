@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AddUser from "./AddUser";
 import { useUserStore } from "../../lib/Userstore";
-import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../../lib/Firebase";
 import { useChatStore } from "../../lib/ChatStore";
 
@@ -10,7 +10,8 @@ const Chatlist = () => {
   const [chats, setChats] = useState([]);
 
   const { currentUser } = useUserStore();
-  const { changeChat } = useChatStore();
+  const { chatId, changeChat } = useChatStore();
+  console.log(chatId);
 
   useEffect(() => {
     if (currentUser) {
@@ -55,8 +56,29 @@ const Chatlist = () => {
   // ];
 
   const handleSelect = async (chat) => {
-    changeChat(chat.chatId, chat.user);
+    const userChats = chats.map((item) => {
+      const { user, ...rest } = item;
+      return rest;
+    });
+
+    const chatIndex = userChats.findIndex(
+      (item) => item.chatId === chat.chatId
+    );
+
+    userChats[chatIndex].isSeen = true;
+
+    const userChatsRef = doc(db, "userchats", currentUser.id);
+
+    try {
+      await updateDoc(userChatsRef, {
+        chats: userChats,
+      });
+      changeChat(chat.chatId, chat.user);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
     <div>
       <div className="flex items-center gap-5 px-3 py-3 ">
@@ -88,7 +110,8 @@ const Chatlist = () => {
           <div
             key={chat.chatId}
             className=" flex items-center gap-5 px-3 py-5 cursor-pointer border-b border-solid  border-[#dddddd35]"
-            onClick={() => handleSelect(chat.chatId)}
+            onClick={() => handleSelect(chat)}
+            style={{ background: chat?.isSeen ? "transparent" : "#5183fe" }}
           >
             <img
               src={chat.user.avatar || "./avatar.png"}

@@ -1,18 +1,40 @@
-import { auth } from "../lib/Firebase";
+import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { useChatStore } from "../lib/ChatStore";
+import { auth, db } from "../lib/Firebase";
+import { useUserStore } from "../lib/Userstore";
 
 const Details = () => {
+  const { chatid, user, isCurrentUserBlocked, isReceiverBlocked, changeBlock } =
+    useChatStore();
+
+  const { currentUser } = useUserStore();
+
+  const handleBlock = async () => {
+    if (!user) return;
+    const userDocRef = doc(db, "users", currentUser.id);
+
+    try {
+      await updateDoc(userDocRef, {
+        blocked: isReceiverBlocked ? arrayRemove(user.id) : arrayUnion(user.id),
+      });
+      changeBlock();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="flex-1 ">
       {/* user */}
-      <div className=" px-8 py-1 flex flex-col items-center  border-b border-solid border-[#dddddd35] ">
+      <div className="px-8 py-1 flex flex-col items-center border-b border-solid border-[#dddddd35]">
         <img
-          src="/avatar.png"
-          alt=""
-          className=" w-[60px] object-cover rounded-full"
+          src={user?.avatar || "/avata.png"}
+          alt="User Avatar"
+          className="w-[60px] object-cover rounded-full"
         />
-        <h1>Jane Doe</h1>
+        <h1>{user?.username}</h1>
         <p>Lorem ipsum dolor sit amet.</p>
       </div>
+
       {/* info */}
       <div className="flex flex-col gap-2 px-5 py-1 ">
         <div>
@@ -136,8 +158,15 @@ const Details = () => {
             />
           </div>
         </div>
-        <button className=" px-5 py-1 bg-[rgba(230,74,105,0.533)] text-white border-none rounded cursor-pointer hover:bg-[rgba(220,20,60,0.796)]">
-          Block User
+        <button
+          className=" px-5 py-1 bg-[rgba(230,74,105,0.533)] text-white border-none rounded cursor-pointer hover:bg-[rgba(220,20,60,0.796)]"
+          onClick={handleBlock}
+        >
+          {isCurrentUserBlocked
+            ? "You are Blocked"
+            : isReceiverBlocked
+            ? "User blocked"
+            : "Block user"}
         </button>
         <button
           className=" px-5 py-1 bg-[#1a73e8] text-white border-none rounded cursor-pointer hover:bg-[rgba(220,20,60,0.796)]"

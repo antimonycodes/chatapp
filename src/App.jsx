@@ -10,10 +10,12 @@ import { useUserStore } from "./lib/Userstore";
 // import ClipLoader from "react-spinners/ClipLoader";
 import { useState } from "react";
 import { BounceLoader } from "react-spinners";
+import { useChatStore } from "./lib/ChatStore";
 
 function App() {
   // const user = false;
   const { currentUser, isLoading, fetchUserInfo } = useUserStore();
+  const { chatId } = useChatStore();
 
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, (user) => {
@@ -66,15 +68,19 @@ function App() {
             <div className="flex-1 ">
               <List />
             </div>
-            <div
-              className="hidden md:block border-l border-r border-solid border-[#dddddd35] "
-              style={{ flex: "2" }}
-            >
-              <Chat />
-            </div>
-            <div className="flex-1 hidden xl:block">
-              <Details />
-            </div>
+            {chatId && (
+              <div
+                className="hidden md:block border-l border-r border-solid border-[#dddddd35] "
+                style={{ flex: "2" }}
+              >
+                <Chat />
+              </div>
+            )}
+            {chatId && (
+              <div className="flex-1 hidden xl:block">
+                <Details />
+              </div>
+            )}
           </>
         ) : (
           <Login />

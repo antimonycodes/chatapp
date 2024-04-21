@@ -1,19 +1,36 @@
 import EmojiPicker from "emoji-picker-react";
-import { doc, onSnapshot } from "firebase/firestore";
+import {
+  arrayUnion,
+  doc,
+  getDoc,
+  onSnapshot,
+  updateDoc,
+} from "firebase/firestore";
 import { useEffect, useRef, useState } from "react";
 import { db } from "../lib/Firebase";
 import { useChatStore } from "../lib/ChatStore";
+// import { updateDoc } from "firebase/database";
+import { useUserStore } from "../lib/Userstore";
+import upload from "../lib/Upload";
 
 const Chat = () => {
   const [openEmoji, setOpenEmoji] = useState(false);
   const [chat, setChat] = useState([]);
   const [text, setText] = useState("");
   const [detailsOpen, setDetailsOpen] = useState(false);
-  const { chatId } = useChatStore();
+  const [img, setImg] = useState({
+    file: null,
+    url: "",
+  });
+  const { chatId, user, isCurrentUserBlocked, isReceiverBlocked } =
+    useChatStore();
+  const { currentUser } = useUserStore();
+
   const openDetails = () => {
     setDetailsOpen((prev) => !prev);
     console.log("details open");
   };
+
   const endRef = useRef(null);
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -33,50 +50,117 @@ const Chat = () => {
     setOpenEmoji(false);
   };
   console.log(text);
-  const messages = [
-    {
-      id: 1,
-      avatar: "/avatar.png",
-      content:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus consequuntur sit, culpa debitis rerum impedit voluptate obcaecati maxime. Reiciendis, modi.",
-      timestamp: "1 min ago",
-    },
-    {
-      id: 2,
-      avatar: null,
-      content:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus consequuntur sit, culpa debitis rerum impedit voluptate obcaecati maxime. Reiciendis, modi.",
-      timestamp: "1 min ago",
-    },
-    {
-      id: 3,
-      avatar: "/avatar.png",
-      content:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus consequuntur sit, culpa debitis rerum impedit voluptate obcaecati maxime. Reiciendis, modi.",
-      timestamp: "1 min ago",
-    },
-    {
-      id: 4,
-      avatar: null,
-      content:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus consequuntur sit, culpa debitis rerum impedit voluptate obcaecati maxime. Reiciendis, modi.",
-      timestamp: "1 min ago",
-    },
-    {
-      id: 5,
-      avatar: "/avatar.png",
-      content:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus consequuntur sit, culpa debitis rerum impedit voluptate obcaecati maxime. Reiciendis, modi.",
-      timestamp: "1 min ago",
-    },
-    {
-      id: 6,
-      avatar: null,
-      content:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus consequuntur sit, culpa debitis rerum impedit voluptate obcaecati maxime. Reiciendis, modi.",
-      timestamp: "1 min ago",
-    },
-  ];
+
+  const handleImg = (e) => {
+    if (e.target.files[0])
+      setImg({
+        file: e.target.files[0],
+        url: URL.createObjectURL(e.target.files[0]),
+      });
+  };
+
+  const handleSend = async () => {
+    // if (text === "") return;
+    if (text === "" || !currentUser || !currentUser.id) return;
+
+    let imgUrl = null;
+    try {
+      if (img.file) {
+        imgUrl = await upload(img.file);
+      }
+      await updateDoc(doc(db, "chats", chatId), {
+        messages: arrayUnion({
+          senderId: currentUser.id,
+          text,
+          createdAt: new Date(),
+          ...(imgUrl && { img: imgUrl }),
+        }),
+      });
+
+      const userIDs = [currentUser.id];
+
+      if (user) {
+        userIDs.push(user.id);
+      }
+
+      userIDs.forEach(async (id) => {
+        if (!id) return;
+        const userChatsRef = doc(db, "userchats", id);
+        const userChatsSnapshot = await getDoc(userChatsRef);
+
+        if (userChatsSnapshot.exists()) {
+          const userChatsData = userChatsSnapshot.data();
+          console.log(userChatsData); // Log userChatsData to inspect its structure
+
+          // Find the index where chatId matches
+          const chatIndex = userChatsData.chats.findIndex(
+            (c) => c.chatId === chatId
+          );
+          console.log("chatIndex:", chatIndex);
+
+          userChatsData.chats[chatIndex].lastMessage = text;
+          userChatsData.chats[chatIndex].isSeen = id === currentUser.id;
+          userChatsData.chats[chatIndex].updatedAt = Date.now();
+
+          await updateDoc(userChatsRef, {
+            chats: userChatsData.chats,
+          });
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    setImg({
+      file: null,
+      url: "",
+    });
+    setText("");
+  };
+
+  // const messages = [
+  //   {
+  //     id: 1,
+  //     avatar: "/avatar.png",
+  //     content:
+  //       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus consequuntur sit, culpa debitis rerum impedit voluptate obcaecati maxime. Reiciendis, modi.",
+  //     timestamp: "1 min ago",
+  //   },
+  //   {
+  //     id: 2,
+  //     avatar: null,
+  //     content:
+  //       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus consequuntur sit, culpa debitis rerum impedit voluptate obcaecati maxime. Reiciendis, modi.",
+  //     timestamp: "1 min ago",
+  //   },
+  //   {
+  //     id: 3,
+  //     avatar: "/avatar.png",
+  //     content:
+  //       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus consequuntur sit, culpa debitis rerum impedit voluptate obcaecati maxime. Reiciendis, modi.",
+  //     timestamp: "1 min ago",
+  //   },
+  //   {
+  //     id: 4,
+  //     avatar: null,
+  //     content:
+  //       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus consequuntur sit, culpa debitis rerum impedit voluptate obcaecati maxime. Reiciendis, modi.",
+  //     timestamp: "1 min ago",
+  //   },
+  //   {
+  //     id: 5,
+  //     avatar: "/avatar.png",
+  //     content:
+  //       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus consequuntur sit, culpa debitis rerum impedit voluptate obcaecati maxime. Reiciendis, modi.",
+  //     timestamp: "1 min ago",
+  //   },
+  //   {
+  //     id: 6,
+  //     avatar: null,
+  //     content:
+  //       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus consequuntur sit, culpa debitis rerum impedit voluptate obcaecati maxime. Reiciendis, modi.",
+  //     timestamp: "1 min ago",
+  //   },
+  // ];
   return (
     <div className="relative flex flex-col h-full overflow-scroll flex-2">
       {/* details */}
@@ -262,33 +346,40 @@ const Chat = () => {
       </div>
       {/* CENTER SECTION */}
       <div className="flex flex-col flex-1 gap-5 px-3 py-5 overflow-scroll ">
-        {messages.map((message) => (
+        {chat?.messages?.map((message) => (
           <div
-            key={message.id}
+            key={message?.createdAt}
             className={
-              message.avatar ? "message-with-avatar" : "message-without-avatar"
+              message.senderId === currentUser?.id ? "message-own" : "message"
             }
           >
-            {message.avatar && (
-              <img
-                src={message.avatar}
-                alt=""
-                className="object-cover w-8 h-8 rounded-full "
-              />
-            )}
             <div className="flex flex-col flex-1 gap-1">
-              <img
+              {/* <img
                 src="/bi.jpg"
                 alt=""
                 className=" w-full h-[300px] rounded-xl"
-              />
-              <p className=" px-3 py-5 bg-[rgba(17,25,40,0.3)] rounded-xl">
-                {message.content}
+              /> */}
+              {message.img && (
+                <img
+                  src={message.img}
+                  alt=""
+                  className=" w-full h-[300px] rounded-xl"
+                />
+              )}
+              <p className=" px-3 py-5 bg-[rgba(17,25,40,0.3)] rounded-xl w-fit items-end flex">
+                {message.text}
               </p>
-              <span className="text-sm ">{message.timestamp}</span>
+              {/* <span className="text-sm ">{message.createdAt}</span> */}
             </div>
           </div>
         ))}
+        {img.url && (
+          <div className="message-own">
+            <div>
+              <img src={img.url} alt="" />
+            </div>
+          </div>
+        )}
         {/* <div>
           <img src="/avatar.png" alt="" />
           <div>
@@ -337,16 +428,31 @@ const Chat = () => {
       {/* BOTTOM  */}
       <div className=" px-3 py-5 flex items-center justify-between border border-solid border-t border-[#dddddd35] gap-5 mt-auto">
         <div className="flex gap-5 cursor-pointer ">
-          <img src="/img.png" alt="" width={20} />
+          <label htmlFor="file">
+            <img src="/img.png" alt="" width={20} />
+          </label>
+          <input
+            type="file"
+            id="file"
+            style={{
+              display: "none",
+            }}
+            onChange={handleImg}
+          />
           <img src="/camera.png" alt="" width={20} />
           <img src="/mic.png" alt="" width={20} />
         </div>
         <input
           type="text"
           value={text}
-          placeholder="Type a message..."
-          className=" flex-1  border-none outline-none text-white bg-[rgba(17,25,40,0.5)] px-5 py-3 rounded-md text-base"
+          placeholder={
+            isCurrentUserBlocked || isReceiverBlocked
+              ? "You cannot send a message"
+              : "Type a message..."
+          }
+          className=" flex-1  border-none outline-none text-white bg-[rgba(17,25,40,0.5)] px-5 py-3 rounded-md text-base disabled: cursor-not-allowed"
           onChange={(e) => setText(e.target.value)}
+          disabled={isCurrentUserBlocked || isReceiverBlocked}
         />
         <div className="relative cursor-pointer ">
           <img
@@ -366,7 +472,11 @@ const Chat = () => {
             </div>
           )} */}
         </div>
-        <button className=" bg-[#5183fe] text-white px-5 py-2 border-none cursor-pointer rounded-md">
+        <button
+          className=" bg-[#5183fe] text-white px-5 py-2 border-none cursor-pointer rounded-md disabled:bg-[#5182feb4] disabled:cursor-not-allowed"
+          onClick={handleSend}
+          disabled={isCurrentUserBlocked || isReceiverBlocked}
+        >
           Send
         </button>
       </div>

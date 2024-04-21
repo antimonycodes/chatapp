@@ -82,6 +82,15 @@ const Login = () => {
   };
   return (
     <>
+      <div className="dark fire">
+        <h1 className="Blazing" contentEditable="true">
+          myChat
+        </h1>
+      </div>
+      {/* <div className="logo">
+        <div id="ten" className="ten"></div>
+        <div id="ten" className="ten"></div>
+      </div> */}
       <div className="flex items-center w-full h-full gap-24 ">
         <div className="flex flex-col items-center flex-1 gap-5 ">
           <h2>Welcome back</h2>
