@@ -450,7 +450,7 @@ const Chat = () => {
               ? "You cannot send a message"
               : "Type a message..."
           }
-          className=" flex-1  border-none outline-none text-white bg-[rgba(17,25,40,0.5)] px-5 py-3 rounded-md text-base disabled: cursor-not-allowed"
+          className=" flex-1  border-none outline-none text-white bg-[rgba(17,25,40,0.5)] px-5 py-3 rounded-md text-base disabled:cursor-not-allowed"
           onChange={(e) => setText(e.target.value)}
           disabled={isCurrentUserBlocked || isReceiverBlocked}
         />

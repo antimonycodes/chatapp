@@ -4,13 +4,19 @@ import { auth, db } from "../lib/Firebase";
 import { useUserStore } from "../lib/Userstore";
 
 const Details = () => {
-  const { chatid, user, isCurrentUserBlocked, isReceiverBlocked, changeBlock } =
-    useChatStore();
-
+  const {
+    chatId,
+    user,
+    isCurrentUserBlocked,
+    isReceiverBlocked,
+    changeBlock,
+    // resetChat,
+  } = useChatStore();
   const { currentUser } = useUserStore();
 
   const handleBlock = async () => {
     if (!user) return;
+
     const userDocRef = doc(db, "users", currentUser.id);
 
     try {
@@ -18,20 +24,27 @@ const Details = () => {
         blocked: isReceiverBlocked ? arrayRemove(user.id) : arrayUnion(user.id),
       });
       changeBlock();
-    } catch (error) {
-      console.log(error);
+      console.log("blocked");
+    } catch (err) {
+      console.log(err);
     }
   };
+
+  // const handleLogout = () => {
+  //   auth.signOut();
+  //   resetChat()
+  // };
+
   return (
     <div className="flex-1 ">
       {/* user */}
-      <div className="px-8 py-1 flex flex-col items-center border-b border-solid border-[#dddddd35]">
+      <div className=" px-8 py-1 flex flex-col items-center border-b border-solid border-[#dddddd35]">
         <img
-          src={user?.avatar || "/avata.png"}
+          src={user?.avatar || "./avatar.png"}
           alt="User Avatar"
           className="w-[60px] object-cover rounded-full"
         />
-        <h1>{user?.username}</h1>
+        <h2>{user?.username}</h2>
         <p>Lorem ipsum dolor sit amet.</p>
       </div>
 

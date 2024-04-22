@@ -126,14 +126,12 @@ span {
 .Blazing {
   display: inline-block;
   margin: 0;
-
   color: rgb(255, 115, 0);
   font-size: 50px;
   line-height: 50px;
   min-width: 50px;
   outline: none;
   vertical-align: middle;
-
   text-shadow: 0 3px 20px red, 0 0 20px red, 0 0 10px orange,
     4px -5px 6px yellow, -4px -10px 10px yellow, 0 -10px 30px yellow;
   animation: 2s Blazing infinite alternate linear;

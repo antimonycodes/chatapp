@@ -8,6 +8,7 @@ import { useChatStore } from "../../lib/ChatStore";
 const Chatlist = () => {
   const [addMode, setAddMode] = useState(false);
   const [chats, setChats] = useState([]);
+  const [input, setInput] = useState("");
 
   const { currentUser } = useUserStore();
   const { chatId, changeChat } = useChatStore();
@@ -79,6 +80,10 @@ const Chatlist = () => {
     }
   };
 
+  const filteredChats = chats.filter((c) =>
+    c.user.username.toLowerCase().includes(input.toLowerCase())
+  );
+
   return (
     <div>
       <div className="flex items-center gap-5 px-3 py-3 ">
@@ -91,6 +96,7 @@ const Chatlist = () => {
             <input
               type="text"
               placeholder="search"
+              onChange={(e) => setInput(e.target.value)}
               className="text-white bg-transparent border-none outline-none grow"
             />
           </div>
@@ -105,7 +111,7 @@ const Chatlist = () => {
         />
       </div>
       {/*Chat items */}
-      {chats.map((chat) => {
+      {filteredChats.map((chat) => {
         return (
           <div
             key={chat.chatId}
@@ -114,13 +120,21 @@ const Chatlist = () => {
             style={{ background: chat?.isSeen ? "transparent" : "#5183fe" }}
           >
             <img
-              src={chat.user.avatar || "./avatar.png"}
+              src={
+                chat.user.blocked.includes(currentUser.id)
+                  ? "./avatar.png"
+                  : chat.user.avatar || "/avatar.png"
+              }
               width={50}
               height={50}
               className="object-cover rounded-full "
             />
             <div className="flex flex-col gap-2 ">
-              <span className="font-medium ">{chat.user.username}</span>
+              <span className="font-medium ">
+                {chat.user.blocked.includes(currentUser.id)
+                  ? "User"
+                  : chat.user.username}
+              </span>
               <p className="text-sm font-light "> {chat.lastMessage}</p>
             </div>
           </div>

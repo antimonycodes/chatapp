@@ -7,7 +7,11 @@ export const useChatStore = create((set) => ({
   user: null,
   isCurrentUserBlocked: false,
   isReceiverBlocked: false,
-  changeChat: (chatId, user) => {
+  currentUser: null, // Add currentUser to the store
+  // Function to set currentUser
+  setCurrentUser: (currentUser) => set({ currentUser }),
+
+  changeChat: async (chatId, user) => {
     const currentUser = useChatStore.getState().currentUser;
 
     // Check if user or currentUser is undefined
@@ -52,7 +56,8 @@ export const useChatStore = create((set) => ({
   changeBlock: () => {
     set((state) => ({
       ...state,
-      isReceiverBlocked: !state.isReceiverBlocked,
+      isCurrentUserBlocked: !state.isCurrentUserBlocked, // Toggle isCurrentUserBlocked
+      isReceiverBlocked: !state.isReceiverBlocked, // Toggle isReceiverBlocked
     }));
   },
 }));
