@@ -21,7 +21,8 @@ const Chatlist = () => {
         async (res) => {
           // console.log("Current data: ", doc.data());
           // setChats(doc.data());
-          const items = res.data().chats;
+          // const items = res.data().chats;
+          const items = res.data()?.chats || [];
 
           const promises = items.map(async (item) => {
             const userDocRef = doc(db, "users", item.receiverId);
@@ -125,9 +126,7 @@ const Chatlist = () => {
                   ? "./avatar.png"
                   : chat.user.avatar || "/avatar.png"
               }
-              width={50}
-              height={50}
-              className="object-cover rounded-full "
+              className="object-cover w-[60px] h-[60px] rounded-full "
             />
             <div className="flex flex-col gap-2 ">
               <span className="font-medium ">

@@ -85,17 +85,71 @@ const AddUser = () => {
   //   } catch (err) {
   //     console.log(err);
   //   }
+  // // };
+  // const handleAdd = async () => {
+  //   const chatRef = collection(db, "chats");
+  //   const userChatsRef = collection(db, "userchats");
+
+  //   try {
+  //     // First, fetch the current chat entries for the currentUser
+  //     const currentUserChatsDoc = doc(userChatsRef, currentUser.id);
+  //     const currentUserChatsSnap = await getDoc(currentUserChatsDoc);
+
+  //     let existingChats = currentUserChatsSnap.exists()
+  //       ? currentUserChatsSnap.data().chats
+  //       : [];
+
+  //     // Check if there's already a chat with the other user
+  //     if (existingChats.some((chat) => chat.receiverId === user.id)) {
+  //       console.log("Chat with this user already exists.");
+  //       return; // Exit if chat already exists
+  //     }
+
+  //     // Create a new chat document
+  //     const newChatRef = doc(chatRef);
+  //     await setDoc(newChatRef, {
+  //       createdAt: serverTimestamp(),
+  //       messages: [],
+  //     });
+
+  //     // Add new chat to both users' chat lists
+  //     await updateDoc(doc(userChatsRef, user.id), {
+  //       chats: arrayUnion({
+  //         chatId: newChatRef.id,
+  //         lastMessage: "",
+  //         receiverId: currentUser.id,
+  //         updatedAt: Date.now(),
+  //       }),
+  //     });
+
+  //     await updateDoc(doc(userChatsRef, currentUser.id), {
+  //       chats: arrayUnion({
+  //         chatId: newChatRef.id,
+  //         lastMessage: "",
+  //         receiverId: user.id,
+  //         updatedAt: Date.now(),
+  //       }),
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
   // };
   const handleAdd = async () => {
     const chatRef = collection(db, "chats");
     const userChatsRef = collection(db, "userchats");
 
     try {
-      // First, fetch the current chat entries for the currentUser
+      // Check if the current user's chat document exists
       const currentUserChatsDoc = doc(userChatsRef, currentUser.id);
       const currentUserChatsSnap = await getDoc(currentUserChatsDoc);
 
-      let existingChats = currentUserChatsSnap.exists()
+      if (!currentUserChatsSnap.exists()) {
+        // If the document doesn't exist, create it with an empty array of chats
+        await setDoc(currentUserChatsDoc, { chats: [] });
+      }
+
+      // Fetch the current chat entries for the currentUser
+      const existingChats = currentUserChatsSnap.exists()
         ? currentUserChatsSnap.data().chats
         : [];
 
@@ -113,20 +167,27 @@ const AddUser = () => {
       });
 
       // Add new chat to both users' chat lists
-      await updateDoc(doc(userChatsRef, user.id), {
-        chats: arrayUnion({
-          chatId: newChatRef.id,
-          lastMessage: "",
-          receiverId: currentUser.id,
-          updatedAt: Date.now(),
-        }),
-      });
-
-      await updateDoc(doc(userChatsRef, currentUser.id), {
+      await updateDoc(currentUserChatsDoc, {
         chats: arrayUnion({
           chatId: newChatRef.id,
           lastMessage: "",
           receiverId: user.id,
+          updatedAt: Date.now(),
+        }),
+      });
+
+      // Update the other user's chat list
+      const otherUserChatsDoc = doc(userChatsRef, user.id);
+      const otherUserChatsSnap = await getDoc(otherUserChatsDoc);
+      const otherUserChats = otherUserChatsSnap.exists()
+        ? otherUserChatsSnap.data().chats
+        : [];
+
+      await updateDoc(otherUserChatsDoc, {
+        chats: arrayUnion({
+          chatId: newChatRef.id,
+          lastMessage: "",
+          receiverId: currentUser.id,
           updatedAt: Date.now(),
         }),
       });

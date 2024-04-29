@@ -116,6 +116,7 @@ const Chat = () => {
     });
     setText("");
   };
+  console.log(user); // Check the structure and value of the user object
 
   // const messages = [
   //   {
@@ -324,14 +325,12 @@ const Chat = () => {
       <div className=" px-3 py-3 flex items-center justify-between border border-b border-[#dddddd35]">
         <div className="flex items-center gap-5 ">
           <img
-            src="/avatar.png"
+            src={user?.avatar || "/avatar.png"}
             alt=""
-            width={50}
-            height={50}
-            className="object-cover rounded-full "
+            className="object-cover w-[50px] h-[50px] rounded-full"
           />
-          <div className="flex flex-col bg-emerald-500" onClick={openDetails}>
-            <span className="text-lg font-bold ">User Name</span>
+          <div className="flex flex-col " onClick={openDetails}>
+            <span className="text-lg font-bold ">{user?.username}</span>
             <p className=" text-sm font-light text-[#a5a5a5]">
               {" "}
               Lorem ipsum, dolor sit amet consectetur

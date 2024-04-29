@@ -4,9 +4,9 @@ import {
 } from "firebase/auth";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { auth, db } from "../../lib/Firebase";
+import { auth, db } from "../lib/Firebase";
 import { doc, setDoc } from "firebase/firestore";
-import upload from "../../lib/Upload";
+import upload from "../lib/Upload";
 import { BeatLoader } from "react-spinners";
 
 const Login = () => {
@@ -24,68 +24,11 @@ const Login = () => {
         url: URL.createObjectURL(e.target.files[0]),
       });
   };
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    setLoading(true);
 
-    const formData = new FormData(e.target);
-    const { username, email, password } = Object.fromEntries(formData);
-    // console.log(username);
-    try {
-      const res = await createUserWithEmailAndPassword(auth, email, password);
-      //
-      const imgUrl = await upload(avatar.file);
-      // Add username to database
-      await setDoc(doc(db, "users", res.user.uid), {
-        username,
-        email,
-        avatar: imgUrl,
-        id: res.user.uid,
-        blocked: [],
-      });
-      // after sign up. creating user chat in the database
-      await setDoc(doc(db, "userchat", res.user.uid), {
-        chats: [],
-      });
-
-      toast.success("Account created! You can login now");
-    } catch (error) {
-      console.log(error);
-      toast.error(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    const formData = new FormData(e.target);
-    const { email, password } = Object.fromEntries(formData);
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-    } catch (error) {
-      console.log(error.message);
-      toast.error(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-  // let [loading, setLoading] = useState(true);
-  let [color, setColor] = useState("#ffffff");
-
-  const override = {
-    display: "block",
-    // margin: "0 auto",
-    marginTop: "5px",
-    borderColor: "red",
-  };
   return (
     <>
       <div className="dark fire">
-        <h1 className="Blazing" contentEditable="true">
-          myChat
-        </h1>
+        <h1 className="Blazing">myChat</h1>
       </div>
       {/* <div className="logo">
         <div id="ten" className="ten"></div>

@@ -7,7 +7,7 @@ const List = () => {
       <div className="">
         <Userinfo />
       </div>
-      <div className=" overflow-scroll flex-1">
+      <div className="flex-1 overflow-scroll ">
         <Chatlist />
       </div>
     </div>

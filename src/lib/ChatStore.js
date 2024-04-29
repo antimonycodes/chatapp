@@ -1,18 +1,15 @@
-import { doc, getDoc } from "firebase/firestore";
 import { create } from "zustand";
-import { db } from "./Firebase";
+import { useUserStore } from "./Userstore";
 
 export const useChatStore = create((set) => ({
   chatId: null,
   user: null,
   isCurrentUserBlocked: false,
   isReceiverBlocked: false,
-  currentUser: null, // Add currentUser to the store
-  // Function to set currentUser
-  setCurrentUser: (currentUser) => set({ currentUser }),
 
   changeChat: async (chatId, user) => {
-    const currentUser = useChatStore.getState().currentUser;
+    // Get the currentUser from useUserStore
+    const { currentUser } = useUserStore.getState();
 
     // Check if user or currentUser is undefined
     if (!user || !currentUser) {
@@ -41,6 +38,8 @@ export const useChatStore = create((set) => ({
         user,
         isCurrentUserBlocked: false,
         isReceiverBlocked: true,
+        username: user.username, // Access username property
+        avatar: user.avatar, // Access avatar property
       });
     }
 

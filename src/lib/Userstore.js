@@ -7,18 +7,21 @@ export const useUserStore = create((set) => ({
   isLoading: true,
   fetchUserInfo: async (uid) => {
     if (!uid) return set({ currentUser: null, isLoading: false });
+
     try {
       const docRef = doc(db, "users", uid);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        set({ currentUser: docSnap.data(), isLoading: false });
+        const userData = docSnap.data();
+        set({ currentUser: userData, isLoading: false });
       } else {
+        console.log("User document does not exist");
         set({ currentUser: null, isLoading: false });
       }
     } catch (error) {
-      console.log(error);
-      return set({ currentUser: null, isLoading: false });
+      console.error("Error fetching user data:", error);
+      set({ currentUser: null, isLoading: false });
     }
   },
 }));

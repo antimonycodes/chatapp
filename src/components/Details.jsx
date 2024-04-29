@@ -45,7 +45,7 @@ const Details = () => {
           className="w-[60px] object-cover rounded-full"
         />
         <h2>{user?.username}</h2>
-        <p>Lorem ipsum dolor sit amet.</p>
+        {/* <p>Lorem ipsum dolor sit amet.</p> */}
       </div>
 
       {/* info */}

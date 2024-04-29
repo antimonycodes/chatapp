@@ -9,9 +9,7 @@ const Userinfo = () => {
         <img
           src={currentUser.avatar || "/avatar.png"}
           alt=""
-          width={40}
-          height={40}
-          className="object-cover rounded-full "
+          className="object-cover w-[40px] h-[40px] rounded-full "
         />
         <h2 className="text-xl ">{currentUser.username}</h2>
       </div>
