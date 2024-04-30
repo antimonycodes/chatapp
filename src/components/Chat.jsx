@@ -118,52 +118,8 @@ const Chat = () => {
   };
   console.log(user); // Check the structure and value of the user object
 
-  // const messages = [
-  //   {
-  //     id: 1,
-  //     avatar: "/avatar.png",
-  //     content:
-  //       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus consequuntur sit, culpa debitis rerum impedit voluptate obcaecati maxime. Reiciendis, modi.",
-  //     timestamp: "1 min ago",
-  //   },
-  //   {
-  //     id: 2,
-  //     avatar: null,
-  //     content:
-  //       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus consequuntur sit, culpa debitis rerum impedit voluptate obcaecati maxime. Reiciendis, modi.",
-  //     timestamp: "1 min ago",
-  //   },
-  //   {
-  //     id: 3,
-  //     avatar: "/avatar.png",
-  //     content:
-  //       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus consequuntur sit, culpa debitis rerum impedit voluptate obcaecati maxime. Reiciendis, modi.",
-  //     timestamp: "1 min ago",
-  //   },
-  //   {
-  //     id: 4,
-  //     avatar: null,
-  //     content:
-  //       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus consequuntur sit, culpa debitis rerum impedit voluptate obcaecati maxime. Reiciendis, modi.",
-  //     timestamp: "1 min ago",
-  //   },
-  //   {
-  //     id: 5,
-  //     avatar: "/avatar.png",
-  //     content:
-  //       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus consequuntur sit, culpa debitis rerum impedit voluptate obcaecati maxime. Reiciendis, modi.",
-  //     timestamp: "1 min ago",
-  //   },
-  //   {
-  //     id: 6,
-  //     avatar: null,
-  //     content:
-  //       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus consequuntur sit, culpa debitis rerum impedit voluptate obcaecati maxime. Reiciendis, modi.",
-  //     timestamp: "1 min ago",
-  //   },
-  // ];
   return (
-    <div className="relative flex flex-col h-full overflow-scroll flex-2">
+    <div className="relative   flex flex-col h-full overflow-scroll ">
       {/* details */}
       {detailsOpen && (
         <div className="absolute z-50 w-full h-full bg-black xl:hidden">
@@ -281,23 +237,6 @@ const Chat = () => {
                       className=" w-7 h-7 bg-[rgba(17,25,40,0.3)] px-2 py-2 rounded-full cursor-pointer"
                     />
                   </div>{" "}
-                  {/* <div className="flex items-center justify-between ">
-              <div className="flex items-center gap-5 ">
-                <img
-                  src="/bi.jpg"
-                  alt=""
-                  className="object-cover w-10 h-10 rounded-md "
-                />
-                <span className="text-sm font-light text-gray-200 ">
-                  photo_2024_2.png
-                </span>
-              </div>
-              <img
-                src="download.png"
-                alt=""
-                className=" w-7 h-7 bg-[rgba(17,25,40,0.3)] px-2 py-2 rounded-full cursor-pointer"
-              />
-            </div>{" "} */}
                 </div>
               </div>
               <div>
@@ -322,25 +261,25 @@ const Chat = () => {
       )}
 
       {/* TOP SECTION */}
-      <div className=" px-3 py-3 flex items-center justify-between border border-b border-[#dddddd35]">
+      <div className=" px-3 py-3 flex  items-center justify-between border border-b border-[#dddddd35]">
         <div className="flex items-center gap-5 ">
           <img
             src={user?.avatar || "/avatar.png"}
             alt=""
             className="object-cover w-[50px] h-[50px] rounded-full"
           />
-          <div className="flex flex-col " onClick={openDetails}>
+          <div className="flex flex-col ">
             <span className="text-lg font-bold ">{user?.username}</span>
-            <p className=" text-sm font-light text-[#a5a5a5]">
-              {" "}
+            {/* <p className=" text-sm font-light text-[#a5a5a5]">
+             
               Lorem ipsum, dolor sit amet consectetur
-            </p>
+            </p> */}
           </div>
         </div>
         <div className="flex items-center gap-5 ">
-          <img src="/phone.png" alt="" width={20} />
-          <img src="/video.png" alt="" width={20} />
-          <img src="/info.png" alt="" width={20} />
+          {/* <img src="/phone.png" alt="" width={20} /> */}
+          {/* <img src="/video.png" alt="" width={20} /> */}
+          <img src="/info.png" alt="" width={20} onClick={openDetails} />
         </div>
       </div>
       {/* CENTER SECTION */}
@@ -379,49 +318,7 @@ const Chat = () => {
             </div>
           </div>
         )}
-        {/* <div>
-          <img src="/avatar.png" alt="" />
-          <div>
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Temporibus consequuntur sit, culpa debitis rerum impedit voluptate
-              obcaecati maxime. Reiciendis, modi.
-            </p>
-            <span>1 min ago</span>
-          </div>
-        </div>
-        <div>
-          <div>
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Temporibus consequuntur sit, culpa debitis rerum impedit voluptate
-              obcaecati maxime. Reiciendis, modi.
-            </p>
-            <span>1 min ago</span>
-          </div>
-        </div>
-        <div>
-          <img src="/avatar.png" alt="" />
 
-          <div>
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Temporibus consequuntur sit, culpa debitis rerum impedit voluptate
-              obcaecati maxime. Reiciendis, modi.
-            </p>
-            <span>1 min ago</span>
-          </div>
-        </div>
-        <div>
-          <div>
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Temporibus consequuntur sit, culpa debitis rerum impedit voluptate
-              obcaecati maxime. Reiciendis, modi.
-            </p>
-            <span>1 min ago</span>
-          </div>
-        </div> */}
         <div ref={endRef}></div>
       </div>
       {/* BOTTOM  */}
@@ -438,9 +335,21 @@ const Chat = () => {
             }}
             onChange={handleImg}
           />
-          <img src="/camera.png" alt="" width={20} />
-          <img src="/mic.png" alt="" width={20} />
+          {/* <img src="/camera.png" alt="" width={20} /> */}
+          {/* <img src="/mic.png" alt="" width={20} /> */}
         </div>
+        {/* <input
+          type="text"
+          value={text}
+          placeholder={
+            isCurrentUserBlocked || isReceiverBlocked
+              ? "You cannot send a message"
+              : "Type a message..."
+          }
+          className=" flex-1 shrink border-none outline-none text-white bg-[rgba(17,25,40,0.5)] px-5 py-3 rounded-md text-base disabled:cursor-not-allowed"
+          onChange={(e) => setText(e.target.value)}
+          disabled={isCurrentUserBlocked || isReceiverBlocked}
+        /> */}
         <input
           type="text"
           value={text}
@@ -449,7 +358,7 @@ const Chat = () => {
               ? "You cannot send a message"
               : "Type a message..."
           }
-          className=" flex-1  border-none outline-none text-white bg-[rgba(17,25,40,0.5)] px-5 py-3 rounded-md text-base disabled:cursor-not-allowed"
+          className="flex-1 min-w-0 border-none outline-none text-white bg-[rgba(17,25,40,0.5)] px-5 py-3 rounded-md text-base disabled:cursor-not-allowed"
           onChange={(e) => setText(e.target.value)}
           disabled={isCurrentUserBlocked || isReceiverBlocked}
         />
@@ -460,8 +369,12 @@ const Chat = () => {
             width={20}
             onClick={() => setOpenEmoji((prev) => !prev)}
           />
-          <div className="absolute left-0 bottom-12">
-            <EmojiPicker open={openEmoji} onEmojiClick={handleEmoji} />
+          <div className="absolute right-0 bottom-12">
+            <EmojiPicker
+              className=" "
+              open={openEmoji}
+              onEmojiClick={handleEmoji}
+            />
           </div>
           {/* {openEmoji ? (
             ""
@@ -472,7 +385,7 @@ const Chat = () => {
           )} */}
         </div>
         <button
-          className=" bg-[#5183fe] text-white px-5 py-2 border-none cursor-pointer rounded-md disabled:bg-[#5182feb4] disabled:cursor-not-allowed"
+          className=" bg-[#D185FF] text-white px-5 py-2 border-none cursor-pointer rounded-md disabled:bg-[#5182feb4] disabled:cursor-not-allowed"
           onClick={handleSend}
           disabled={isCurrentUserBlocked || isReceiverBlocked}
         >

@@ -18,8 +18,8 @@
   padding: 0;
   box-sizing: border-box;
 }
-body {
-  /* background: url("/bi.jpg"); */
+/* body {
+  
   background: #050505;
   display: flex;
   align-items: center;
@@ -27,7 +27,8 @@ body {
   height: 100vh;
   color: white;
   position: relative;
-} /* Add these styles to your styles.css file or a <style> tag in your component */
+} */
+/* Add these styles to your styles.css file or a <style> tag in your component */
 .custom-scrollbar {
   /* Hide the scrollbar by default */
   scrollbar-width: none; /* For Firefox */
@@ -88,7 +89,7 @@ body {
   align-self: flex-end;
 }
 .message-own p {
-  background-color: #5183fe;
+  background-color: #d185ff;
 }
 span {
   display: inline;

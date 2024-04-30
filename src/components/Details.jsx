@@ -182,7 +182,7 @@ const Details = () => {
             : "Block user"}
         </button>
         <button
-          className=" px-5 py-1 bg-[#1a73e8] text-white border-none rounded cursor-pointer hover:bg-[rgba(220,20,60,0.796)]"
+          className=" px-5 py-1 bg-[#D185FF]  text-white border-none rounded cursor-pointer hover:bg-[rgba(220,20,60,0.796)]"
           onClick={() => auth.signOut()}
         >
           Log Out

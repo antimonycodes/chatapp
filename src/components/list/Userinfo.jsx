@@ -15,8 +15,8 @@ const Userinfo = () => {
       </div>
       <div className="flex gap-5 cursor-pointer icons">
         <img src="/more.png" alt="" width={20} height={20} />
-        <img src="/video.png" alt="" width={20} height={20} />
-        <img src="/edit.png" alt="" width={20} height={20} />
+        {/* <img src="/video.png" alt="" width={20} height={20} /> */}
+        {/* <img src="/edit.png" alt="" width={20} height={20} /> */}
       </div>
     </div>
   );

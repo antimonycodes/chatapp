@@ -84,7 +84,7 @@ const Home = () => {
   return (
     <div>
       <div
-        className=" w-[80vw] h-[90vh] rounded-lg  border border-solid border-gray-500  md:flex bg  bg-black "
+        className=" w-full h-[100vh] text-white rounded-lg  border border-solid border-gray-500  md:flex bg  bg-black "
         // style={{
         //   background:
         //     "linear-gradient(90deg, rgba(91,33,182,0.75) 47%, rgba(39,121,216,0.75) 100%)",
@@ -97,7 +97,7 @@ const Home = () => {
             </div>
             {chatId && (
               <div
-                className="hidden md:block border-l border-r border-solid border-[#dddddd35] "
+                className="hidden xl:block border-l border-r border-solid border-[#dddddd35] "
                 style={{ flex: "2" }}
               >
                 <Chat currentUser={currentUser} />

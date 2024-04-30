@@ -6,6 +6,7 @@ import { doc, setDoc } from "firebase/firestore";
 import upload from "../lib/Upload";
 import { BeatLoader } from "react-spinners";
 import { Link } from "react-router-dom";
+import Notification from "../components/Notification";
 
 const Signup = () => {
   const [avatar, setAvatar] = useState({
@@ -75,9 +76,21 @@ const Signup = () => {
     }
   };
   return (
-    <div>
+    <div className=" flex items-center justify-center h-screen text-white">
       {/* sign up form */}
-      <div className="flex flex-col items-center flex-1 gap-5">
+      <div className="flex flex-col   items-center flex-1 gap-5">
+        <div className=" text-4xl flex items-center font-bold">
+          <img
+            src="/logo.gif"
+            alt=""
+            className=" bg-[#D185FF] w-16 h-12 rounded-md "
+          />
+
+          <h1>
+            {/* Chat */}
+            <span className=" inline-block px-0 mx-0 text-white">app</span>
+          </h1>
+        </div>
         <h2>Create an Account</h2>
         <form
           action=""
@@ -86,12 +99,12 @@ const Signup = () => {
         >
           <label
             htmlFor="file"
-            className="flex items-center w-full gap-5 underline cursor-pointer "
+            className="flex items-center w-full gap-5 underline cursor-pointer text-[#D185FF] "
           >
             <img
-              src={avatar.url || "./avatar.png"}
+              src={avatar.url || "./addimage.png"}
               alt=""
-              className=" w-12 h-12 rounded-md object-cover opacity-[60%]"
+              className=" w-12 h-12 rounded-md object-cover opacity-[60%] "
             />
             Upload an image
           </label>
@@ -123,7 +136,7 @@ const Signup = () => {
           />
           <button
             disabled={loading}
-            className=" w-full px-5 py-2 border-none bg-[#1f8ef1] text-white rounded-md cursor-pointer "
+            className=" w-full px-5 py-2 border-none bg-[#D185FF] text-white rounded-md cursor-pointer "
           >
             {loading ? (
               <div className="flex items-center justify-center sweet-loading">
@@ -139,17 +152,18 @@ const Signup = () => {
                 />
               </div>
             ) : (
-              "Sign Up"
+              <div className=" font-bold">Sign Up</div>
             )}
           </button>
           <p>
             Already have an account?
-            <Link to="/sign-in" className="ml-4 ">
+            <Link to="/sign-in" className="ml-2 text-[#D185FF] ">
               Log in
             </Link>
           </p>
         </form>
       </div>
+      <Notification />
     </div>
   );
 };

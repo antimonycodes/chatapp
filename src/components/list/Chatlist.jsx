@@ -45,21 +45,10 @@ const Chatlist = () => {
 
   console.log(chats);
 
-  // const chatItem = [
-  //   { id: 1, img: "/avatar.png", name: " User Name", message: "hello " },
-  //   { id: 1, img: "/avatar.png", name: " User Name", message: "hello " },
-  //   { id: 1, img: "/avatar.png", name: " User Name", message: "hello " },
-  //   { id: 1, img: "/avatar.png", name: " User Name", message: "hello " },
-  //   { id: 1, img: "/avatar.png", name: " User Name", message: "hello " },
-  //   { id: 1, img: "/avatar.png", name: " User Name", message: "hello " },
-  //   { id: 1, img: "/avatar.png", name: " User Name", message: "hello " },
-  //   { id: 1, img: "/avatar.png", name: " User Name", message: "hello " },
-  //   { id: 1, img: "/avatar.png", name: " User Name", message: "hello " },
-  // ];
-
   const handleSelect = async (chat) => {
     const userChats = chats.map((item) => {
       const { user, ...rest } = item;
+      console.log("chat opened");
       return rest;
     });
 
@@ -87,7 +76,7 @@ const Chatlist = () => {
 
   return (
     <div>
-      <div className="flex items-center gap-5 px-3 py-3 ">
+      <div className="flex items-center gap-3 px-3 py-3 ">
         <div
           className=" flex-1 flex items-center gap-5 rounded-xl py-[8px] px-[10px]"
           style={{ background: "rgba(17,25,40,0.5)" }}
@@ -103,9 +92,9 @@ const Chatlist = () => {
           </div>
         </div>
         <img
-          src={addMode ? "/minus.png" : "/plus.png"}
+          src={addMode ? "/minus.png" : "/Icon.png"}
           alt=""
-          width={36}
+          width={46}
           className="px-3 py-3 rounded-lg cursor-pointer "
           style={{ background: "rgba(17,25,40,0.5)" }}
           onClick={() => setAddMode((prev) => !prev)}
@@ -139,28 +128,8 @@ const Chatlist = () => {
           </div>
         );
       })}
-      {/* <div>
-        <img src="/avatar.png" alt="" />
-        <div>
-          <span>Jane Doe</span>
-          <p>hey</p>
-        </div>
-      </div>
-      <div>
-        <img src="/avatar.png" alt="" />
-        <div>
-          <span>Jane Doe</span>
-          <p>hey</p>
-        </div>
-      </div>{" "}
-      <div>
-        <img src="/avatar.png" alt="" />
-        <div>
-          <span>Jane Doe</span>
-          <p>hey</p>
-        </div>
-      </div> */}
-      {addMode && <AddUser />}
+
+      {addMode && <AddUser setAddMode={setAddMode} />}
     </div>
   );
 };
