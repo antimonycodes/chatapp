@@ -68,7 +68,7 @@ const Signin = () => {
               type="text"
               placeholder="Email"
               name="email"
-              className=" px-10 py-3 border-none outline-none bg-[rgba(17,25,40,0.6)] text-white rounded-md"
+              className=" px-10 py-3 border-none outline-none bg-[rgba(17,25,40,0.6)] text-white flex-shrink-0 rounded-md"
             />
             <input
               type="password"
@@ -97,7 +97,7 @@ const Signin = () => {
               )}
             </button>
           </form>
-          <p className=" text-white">
+          <p className=" w-full text-sm  text-white">
             Don't have an account?
             <Link to="/sign-up" className="ml-1 text-[#D185FF]">
               Sign up
