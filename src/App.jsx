@@ -64,7 +64,13 @@ const App = () => {
 
   return (
     <>
-      <main className=" w-full bg-red-950 p-0 m-0">
+      <main
+        className=" w-full p-0 m-0"
+        // style={{
+        //   background:
+        //     "linear-gradient(90deg, rgba(91,33,182,0.75) 47%, rgba(39,121,216,0.75) 100%)",
+        // }}
+      >
         {/* {showIntroduction && <Introduction onClose={handleCloseIntroduction} />} */}
         <Routes>
           {/* public routes */}

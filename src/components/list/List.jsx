@@ -7,7 +7,7 @@ const List = () => {
       <div className="">
         <Userinfo />
       </div>
-      <div className=" overflow-scroll ">
+      <div className="custom-scrollbar overflow-y-scroll ">
         <Chatlist />
       </div>
     </div>

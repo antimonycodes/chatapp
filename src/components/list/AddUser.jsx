@@ -112,7 +112,7 @@ const AddUser = ({ setAddMode }) => {
           type="text"
           placeholder="Username"
           name="username"
-          className="px-5 py-4 border-none outline-none text-black
+          className="px-5 bg-transparent text-white  py-4 border-none outline-none 
            rounded-xl"
         />
         <button className=" px-5 py-4 rounded-xl bg-[#D185FF] text-white cursor-pointer">

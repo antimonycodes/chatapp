@@ -38,6 +38,7 @@ const Chat = () => {
   }, []);
   //
   useEffect(() => {
+    if (!chatId) return; // Ensure chatId is not null
     const unSub = onSnapshot(doc(db, "chats", chatId), (res) => {
       setChat(res.data());
     });
@@ -45,6 +46,7 @@ const Chat = () => {
       unSub();
     };
   }, [chatId]);
+
   const handleEmoji = (e) => {
     // console.log(e);
     setText((prev) => prev + e.emoji);
@@ -120,7 +122,7 @@ const Chat = () => {
   console.log(user); // Check the structure and value of the user object
 
   return (
-    <div className="relative   flex flex-col h-full overflow-scroll ">
+    <div className="relative  custom-scrollbar  flex flex-col h-full overflow-y-scroll ">
       {/* details */}
       {detailsOpen && (
         <div className="absolute z-50 w-full h-full bg-black xl:hidden">
@@ -160,7 +162,7 @@ const Chat = () => {
         </div>
       </div>
       {/* CENTER SECTION */}
-      <div className="flex flex-col flex-1 gap-5 px-3 py-5 overflow-scroll ">
+      <div className="custom-scrollbar flex flex-col flex-1 gap-5 px-3 py-5 overflow-y-scroll ">
         {chat?.messages?.map((message) => (
           <div
             key={message?.createdAt}

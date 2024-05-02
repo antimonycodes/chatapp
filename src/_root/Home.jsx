@@ -20,7 +20,7 @@ import Chat from "../components/Chat";
 // import { useState } from "react";
 // import { BounceLoader } from "react-spinners";
 // import { useChatStore } from "./lib/ChatStore";
-import { Comment } from "react-loader-spinner";
+// import { Comment } from "react-loader-spinner";
 import Loader from "../components/Loader";
 
 const Home = () => {
@@ -40,7 +40,7 @@ const Home = () => {
   }, [fetchUserInfo]);
   console.log(currentUser);
 
-  let [loading, setLoading] = useState(true);
+  // let [loading, setLoading] = useState(true);
   // let [color, setColor] = useState("blue");
 
   //   // const override = {

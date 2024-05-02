@@ -57,7 +57,7 @@
 .custom-scrollbar:hover::-webkit-scrollbar-thumb,
 .custom-scrollbar:active::-webkit-scrollbar-thumb,
 .custom-scrollbar:focus::-webkit-scrollbar-thumb {
-  background-color: #050505;
+  background-color: white;
   border-radius: 6px;
   border: 1px solid #0000000a;
 }
