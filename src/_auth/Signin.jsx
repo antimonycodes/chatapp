@@ -98,7 +98,7 @@ const Signin = () => {
             </button>
           </form>
           <p className=" text-white">
-            Don't have an account?{" "}
+            Don't have an account?
             <Link to="/sign-up" className="ml-1 text-[#D185FF]">
               Sign up
             </Link>

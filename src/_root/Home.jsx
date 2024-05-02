@@ -82,39 +82,39 @@ const Home = () => {
       </div>
     );
   return (
-    <div>
-      <div
-        className=" w-full h-[100vh] text-white rounded-lg  border border-solid border-gray-500  md:flex bg  bg-black "
-        // style={{
-        //   background:
-        //     "linear-gradient(90deg, rgba(91,33,182,0.75) 47%, rgba(39,121,216,0.75) 100%)",
-        // }}
-      >
-        {currentUser ? (
-          <>
-            <div className="flex-1 ">
-              <List />
+    // <div className=" h-full bg-green-700">
+    <div
+      className="  h-screen w-full text-white rounded-lg  border border-solid border-gray-500  md:flex  "
+      style={{
+        background:
+          "linear-gradient(90deg, rgba(91,33,182,0.75) 47%, rgba(39,121,216,0.75) 100%)",
+      }}
+    >
+      {currentUser ? (
+        <>
+          <div className="flex-1 ">
+            <List />
+          </div>
+          {chatId && (
+            <div
+              className="hidden md:block border-l border-r border-solid border-[#dddddd35] "
+              style={{ flex: "2" }}
+            >
+              <Chat currentUser={currentUser} />
             </div>
-            {chatId && (
-              <div
-                className="hidden xl:block border-l border-r border-solid border-[#dddddd35] "
-                style={{ flex: "2" }}
-              >
-                <Chat currentUser={currentUser} />
-              </div>
-            )}
-            {chatId && (
-              <div className="flex-1 hidden xl:block">
-                <Details />
-              </div>
-            )}
-          </>
-        ) : (
-          <Signin />
-        )}
-        <Notification />
-      </div>
+          )}
+          {chatId && (
+            <div className="flex-1 hidden xl:block">
+              <Details />
+            </div>
+          )}
+        </>
+      ) : (
+        <Signin />
+      )}
+      <Notification />
     </div>
+    // </div>
   );
 };
 

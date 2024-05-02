@@ -64,7 +64,7 @@ const App = () => {
 
   return (
     <>
-      <main className=" bg-black">
+      <main className=" w-full bg-red-950 p-0 m-0">
         {/* {showIntroduction && <Introduction onClose={handleCloseIntroduction} />} */}
         <Routes>
           {/* public routes */}
@@ -74,9 +74,9 @@ const App = () => {
           </Route>
 
           {/* private routes */}
-          <Route element={<RootLayout />}>
-            <Route index element={<Home />} />
-          </Route>
+          {/* <Route element={<RootLayout />}> */}
+          <Route index element={<Home />} />
+          {/* </Route> */}
         </Routes>
       </main>
     </>

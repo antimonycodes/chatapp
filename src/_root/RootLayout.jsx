@@ -3,7 +3,7 @@ import Home from "./Home";
 
 const RootLayout = () => {
   return (
-    <div>
+    <div className=" bg-yellow-400 w-full h-full">
       <Home />
     </div>
   );

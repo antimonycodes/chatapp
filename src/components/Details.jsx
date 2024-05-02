@@ -141,24 +141,7 @@ const Details = () => {
                 alt=""
                 className=" w-7 h-7 bg-[rgba(17,25,40,0.3)] px-2 py-2 rounded-full cursor-pointer"
               />
-            </div>{" "}
-            {/* <div className="flex items-center justify-between ">
-              <div className="flex items-center gap-5 ">
-                <img
-                  src="/bi.jpg"
-                  alt=""
-                  className="object-cover w-10 h-10 rounded-md "
-                />
-                <span className="text-sm font-light text-gray-200 ">
-                  photo_2024_2.png
-                </span>
-              </div>
-              <img
-                src="download.png"
-                alt=""
-                className=" w-7 h-7 bg-[rgba(17,25,40,0.3)] px-2 py-2 rounded-full cursor-pointer"
-              />
-            </div>{" "} */}
+            </div>
           </div>
         </div>
         <div>

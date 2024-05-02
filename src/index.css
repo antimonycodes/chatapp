@@ -18,16 +18,7 @@
   padding: 0;
   box-sizing: border-box;
 }
-/* body {
-  
-  background: #050505;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  color: white;
-  position: relative;
-} */
+
 /* Add these styles to your styles.css file or a <style> tag in your component */
 .custom-scrollbar {
   /* Hide the scrollbar by default */
@@ -178,11 +169,11 @@ span {
   position: absolute;
 }
 
-@media (max-width: 400px) {
+/* @media (max-width: 400px) {
   div:not(.no-scale) {
     transform: scale(0.8);
   }
-}
+} */
 
 /* Specific styles for #ten */
 #ten {
