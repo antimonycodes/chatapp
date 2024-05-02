@@ -125,7 +125,7 @@ const Chat = () => {
     <div className="relative  custom-scrollbar  flex flex-col h-full overflow-y-scroll ">
       {/* details */}
       {detailsOpen && (
-        <div className="absolute z-50 w-full h-full bg-black xl:hidden">
+        <div className="absolute z-50 w-full h-full xl:hidden">
           <div className=" px-3 py-3 flex items-center  gap-10 border border-b border-[#dddddd35]">
             <div
               className="text-xl "
